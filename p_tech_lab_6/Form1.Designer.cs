@@ -28,33 +28,54 @@
         /// </summary>
         private void InitializeComponent()
         {
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            components = new System.ComponentModel.Container();
+            pbMain = new PictureBox();
+            timer1 = new System.Windows.Forms.Timer(components);
+            txtLog = new RichTextBox();
+            ((System.ComponentModel.ISupportInitialize)pbMain).BeginInit();
             SuspendLayout();
             // 
-            // pictureBox1
+            // pbMain
             // 
-            pictureBox1.Location = new Point(33, 23);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1212, 715);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            pictureBox1.Paint += pbMain_Paint;
+            pbMain.Location = new Point(33, 23);
+            pbMain.Name = "pbMain";
+            pbMain.Size = new Size(857, 715);
+            pbMain.TabIndex = 0;
+            pbMain.TabStop = false;
+            pbMain.Paint += pbMain_Paint;
+            pbMain.MouseClick += pbMain_MouseClick;
+            // 
+            // timer1
+            // 
+            timer1.Enabled = true;
+            timer1.Interval = 30;
+            timer1.Tick += timer1_Tick;
+            // 
+            // txtLog
+            // 
+            txtLog.Location = new Point(907, 25);
+            txtLog.Name = "txtLog";
+            txtLog.Size = new Size(357, 713);
+            txtLog.TabIndex = 1;
+            txtLog.Text = "";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1276, 769);
-            Controls.Add(pictureBox1);
+            Controls.Add(txtLog);
+            Controls.Add(pbMain);
             Name = "Form1";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbMain).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private PictureBox pictureBox1;
+        private PictureBox pbMain;
+        private System.Windows.Forms.Timer timer1;
+        private RichTextBox txtLog;
     }
 }
