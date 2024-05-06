@@ -6,5 +6,11 @@ namespace p_tech_lab_6
         {
             InitializeComponent();
         }
+
+        private void pbMain_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics; // вытащили объект графики из события
+            g.DrawRectangle(new Pen(Color.Red), 200, 100, 50, 30);  // рисуем прямоугольную рамку
+        }
     }
 }
