@@ -11,6 +11,7 @@ namespace p_tech_lab_6.Objects
     {
 
         public Action<Marker> OnMarkerOverlap;
+        public Action<Enemy> OnEnemyOverlap;
         public  Player(float x , float y,  float angle ) : base (x,y,angle)
         {
 
@@ -22,7 +23,6 @@ namespace p_tech_lab_6.Objects
             using (Pen pen = new Pen(Color.Black, 2))
                 g.DrawEllipse(pen, -15, -15, 30, 30);
             //g.FillEllipse(new Pen (Color.Black, 2), -15, -15, 30,30);
-
 
             g.DrawLine(new Pen(Color.Black, 2), 0, 0, 25, 0);
 
@@ -39,10 +39,16 @@ namespace p_tech_lab_6.Objects
         public override void Overlap(BaseObject obj)
         {
             base.Overlap(obj);
-            if (obj is  Marker )
+            if (obj is Marker)
             {
-
+                OnMarkerOverlap(obj as Marker);
             }
+
+            if (obj is Enemy)
+            {
+                OnEnemyOverlap(obj as Enemy);
+            }
+           
         }
     }
 }

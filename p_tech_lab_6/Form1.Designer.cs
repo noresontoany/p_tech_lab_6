@@ -32,14 +32,17 @@
             pbMain = new PictureBox();
             timer1 = new System.Windows.Forms.Timer(components);
             txtLog = new RichTextBox();
+            newObjTimer = new System.Windows.Forms.Timer(components);
+            scoreTxt = new Label();
             ((System.ComponentModel.ISupportInitialize)pbMain).BeginInit();
             SuspendLayout();
             // 
             // pbMain
             // 
-            pbMain.Location = new Point(33, 23);
+            pbMain.Location = new Point(23, 14);
+            pbMain.Margin = new Padding(2);
             pbMain.Name = "pbMain";
-            pbMain.Size = new Size(857, 715);
+            pbMain.Size = new Size(600, 429);
             pbMain.TabIndex = 0;
             pbMain.TabStop = false;
             pbMain.Paint += pbMain_Paint;
@@ -53,23 +56,42 @@
             // 
             // txtLog
             // 
-            txtLog.Location = new Point(907, 25);
+            txtLog.Location = new Point(635, 15);
+            txtLog.Margin = new Padding(2);
             txtLog.Name = "txtLog";
-            txtLog.Size = new Size(357, 713);
+            txtLog.Size = new Size(251, 429);
             txtLog.TabIndex = 1;
             txtLog.Text = "";
             // 
+            // newObjTimer
+            // 
+            newObjTimer.Enabled = true;
+            newObjTimer.Interval = 10000;
+            newObjTimer.Tick += newObjTimer_Tick;
+            // 
+            // scoreTxt
+            // 
+            scoreTxt.AutoSize = true;
+            scoreTxt.Location = new Point(545, 28);
+            scoreTxt.Name = "scoreTxt";
+            scoreTxt.Size = new Size(48, 15);
+            scoreTxt.TabIndex = 2;
+            scoreTxt.Text = "Очки: 0";
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1276, 769);
+            ClientSize = new Size(893, 461);
+            Controls.Add(scoreTxt);
             Controls.Add(txtLog);
             Controls.Add(pbMain);
+            Margin = new Padding(2);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pbMain).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -77,5 +99,7 @@
         private PictureBox pbMain;
         private System.Windows.Forms.Timer timer1;
         private RichTextBox txtLog;
+        private System.Windows.Forms.Timer newObjTimer;
+        private Label scoreTxt;
     }
 }

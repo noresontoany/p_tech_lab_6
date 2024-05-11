@@ -1,4 +1,5 @@
 using p_tech_lab_6.Objects;
+using System.Collections.Specialized;
 using System.DirectoryServices.ActiveDirectory;
 
 namespace p_tech_lab_6
@@ -9,7 +10,11 @@ namespace p_tech_lab_6
 
         List<BaseObject> objects = new();
         Player player;
+
         Marker? marker;
+
+        int countEnemy = 0;
+        int score = 0;
 
 
         public Form1()
@@ -20,16 +25,28 @@ namespace p_tech_lab_6
             player.OnOverlap += (player, obj) =>
             {
                 txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+
             };
+
             player.OnMarkerOverlap += (m) =>
             {
                 objects.Remove(m);
                 marker = null;
             };
 
+            player.OnEnemyOverlap += (e) =>
+            {
+                objects.Remove(e);
+                countEnemy--;
+               
+                scoreTxt.Text = "Очки :" + score.ToString();
+                createEnemy();
+
+                score++;
+            };
+
             objects.Add(player);
-            objects.Add(new MyRectangle(100, 100, 45));
-            objects.Add(new MyRectangle(50, 50, 0));
+            objects.Add(new Enemy(100, 100, 0));
 
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
 
@@ -45,24 +62,24 @@ namespace p_tech_lab_6
 
             g.Clear(Color.White);
 
+            // пересчитываем пересечения
             foreach (var obj in objects.ToList())
             {
                 if (obj != player && player.Overlaps(obj, g))
                 {
-                    /* УДАЛЯЮ ТУТ 
-                       txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text; */
-
-                    // а вот эти строчки добавляем
-                    player.Overlap(obj); // то есть игрок пересекся с объектом
-                    obj.Overlap(player); // и объект пересекся с игроком
-
-                    //if (obj == marker)
-                    //{
-                    //    objects.Remove(marker);
-                    //    marker = null;
-                    //}
+                    player.Overlap(obj);
+                    obj.Overlap(player);
                 }
 
+
+
+
+
+            }
+
+            // рендерим объекты
+            foreach (var obj in objects)
+            {
                 g.Transform = obj.GetTransform();
                 obj.Render(g);
             }
@@ -83,6 +100,8 @@ namespace p_tech_lab_6
                 player.X += dx * 2;
                 player.Y += dy * 2;
             }
+
+
             pbMain.Invalidate();
         }
 
@@ -97,6 +116,34 @@ namespace p_tech_lab_6
             // а это так и остается
             marker.X = e.X;
             marker.Y = e.Y;
+        }
+
+        private void newObjTimer_Tick(object sender, EventArgs e)
+        {
+            if (countEnemy < 5)
+            {
+                createEnemy();
+            }
+        }
+
+        private void createEnemy()
+        {
+            Random rnd = new Random();
+            int x, y;
+            while (true)
+            {
+                x = rnd.Next(25, pbMain.Width);
+                y = rnd.Next(25, pbMain.Height);
+
+                if (x != player.X && y != player.Y)
+                {
+                    break;
+                }
+            }
+
+            var enemy = new Enemy(x, y, 0);
+            objects.Add(enemy);
+            countEnemy++;
         }
     }
 }
