@@ -12,21 +12,23 @@ namespace p_tech_lab_6.Objects
 
         public Action<Marker> OnMarkerOverlap;
         public Action<Enemy> OnEnemyOverlap;
-        public  Player(float x , float y,  float angle ) : base (x,y,angle)
-        {
 
+        public float vX, vY;
+        public  Player(float x , float y,  float angle, int id) : base (x,y,angle)
+        {
+            this.mainColor = Color.DeepSkyBlue;
         }
 
         public override void Render(Graphics g)
         {
-            g.FillEllipse(new SolidBrush(Color.DeepSkyBlue), -15, -15, 30,30);
+            g.FillEllipse(new SolidBrush(mainColor), -15, -15, 30,30);
             using (Pen pen = new Pen(Color.Black, 2))
                 g.DrawEllipse(pen, -15, -15, 30, 30);
             //g.FillEllipse(new Pen (Color.Black, 2), -15, -15, 30,30);
 
             g.DrawLine(new Pen(Color.Black, 2), 0, 0, 25, 0);
 
-
+            //g.Clear(Color .White);
         }
 
         public override GraphicsPath GetGraphicsPath()
@@ -43,14 +45,11 @@ namespace p_tech_lab_6.Objects
             {
                 OnMarkerOverlap(obj as Marker);
             }
-
-            if (obj is Enemy)
+            else if (obj is Enemy)
             {
                 OnEnemyOverlap(obj as Enemy);
             }
-
-
-           
+ 
         }
     }
 }

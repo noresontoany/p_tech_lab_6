@@ -12,6 +12,8 @@ namespace p_tech_lab_6.Objects
         public float X;
         public float Y;
         public float Angle;
+        public Color mainColor;
+        public int id;
 
         public Action <BaseObject, BaseObject> OnOverlap;
 
@@ -31,6 +33,10 @@ namespace p_tech_lab_6.Objects
             }
         }
 
+        public virtual void reColor(BaseObject obj)
+        {
+
+        }
 
         // добавил виртуальный метод для отрисовки
         public virtual void Render(Graphics g)

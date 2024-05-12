@@ -1,5 +1,6 @@
 using p_tech_lab_6.Objects;
 using System.Collections.Specialized;
+using System.ComponentModel.Design.Serialization;
 using System.DirectoryServices.ActiveDirectory;
 
 namespace p_tech_lab_6
@@ -9,28 +10,42 @@ namespace p_tech_lab_6
         MyRectangle? myRect; // создадим поле под наш прямоугольник
 
         List<BaseObject> objects = new();
-        Player player;
-        Black black;
+        Player? player;
+        Black? black;
         Marker? marker;
+
+
 
         int countEnemy = 0;
         int score = 0;
+        int id = 0;
 
 
         public Form1()
         {
             InitializeComponent();
-            player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
-            black = new Black(0, 0, 0, pbMain.Height);
+
+            player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0, id++);
+
+            black = new Black(0, 0, 0, pbMain.Height, id++);
             objects.Add(black);
+            bool cop = true;
+            
+                player.OnOverlap += (player, obj) =>
+                {
+                    if (obj is Black)
+                    {
+                        cop = false;
+                    }
+                    else { cop = true; }
 
-            player.OnOverlap += (player, obj) =>
-            {
-                txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj }\n" + txtLog.Text;
+                    if (cop)
+                    {
+                        txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                    }
+                };
+            
 
-            };
-
-           
 
             player.OnMarkerOverlap += (m) =>
             {
@@ -50,7 +65,7 @@ namespace p_tech_lab_6
             };
 
             objects.Add(player);
-            objects.Add(new Enemy(100, 100, 0));
+            objects.Add(new Enemy(100, 100, 0, id++));
 
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
 
@@ -65,17 +80,45 @@ namespace p_tech_lab_6
             var g = e.Graphics;
 
             g.Clear(Color.White);
-
+            updatePlayer();
+           
+            //BlackAppers();
             // пересчитываем пересечения
             foreach (var obj in objects.ToList())
             {
-                if (obj != player && player.Overlaps(obj, g))
-                {
-                    player.Overlap(obj);
-                    obj.Overlap(player);
-                }
+                
+                
+                    if (player != null && obj != player && obj != black && player.Overlaps(obj, g))
+                    {
+                        player.Overlap(obj);
+                        obj.Overlap(player);
+                    }
 
 
+
+                    if (black != null && (obj is Enemy || obj is Player) && black.Overlaps(obj, g))
+                    {
+                        black.Overlap(obj);
+                        obj.Overlap(black);
+                        
+                        //if (!black.original.ContainsKey(obj.GetHashCode()))
+                        //{
+                        //    black.original[obj.GetHashCode()] = obj.mainColor;
+                            
+
+                        //}
+                        //obj.mainColor = Color.Gray;
+
+
+                    }
+                    else if (black != null && (obj is Enemy || obj is Player) && black.original.ContainsKey(obj.GetHashCode()))
+                    {
+
+                        obj.mainColor = black.freeDark(obj);
+                       
+                    }
+
+                
 
             }
 
@@ -90,18 +133,7 @@ namespace p_tech_lab_6
         private void timer1_Tick(object sender, EventArgs e)
         {
 
-            if (marker != null)
-            {
-                float dx = marker.X - player.X;
-                float dy = marker.Y - player.Y;
-
-                float length = MathF.Sqrt(dx * dx + dy * dy);
-                dx /= length;
-                dy /= length;
-
-                player.X += dx * 2;
-                player.Y += dy * 2;
-            }
+            updatePlayer();
 
 
             pbMain.Invalidate();
@@ -122,7 +154,7 @@ namespace p_tech_lab_6
 
         private void newObjTimer_Tick(object sender, EventArgs e)
         {
-            if (countEnemy < 5)
+            if (countEnemy < 3)
             {
                 createEnemy();
             }
@@ -134,8 +166,8 @@ namespace p_tech_lab_6
             int x, y;
             while (true)
             {
-                x = rnd.Next(25, pbMain.Width);
-                y = rnd.Next(25, pbMain.Height);
+                x = rnd.Next(50, pbMain.Width - 50);
+                y = rnd.Next(50, pbMain.Height - 50);
 
                 if (x != player.X && y != player.Y)
                 {
@@ -143,13 +175,60 @@ namespace p_tech_lab_6
                 }
             }
 
-            var enemy = new Enemy(x, y, 0);
+            var enemy = new Enemy(x, y, 0, id++);
             objects.Add(enemy);
             countEnemy++;
         }
 
+
+        //private void BlackAppers()
+        //{
+        //    if (black != null)
+        //    {
+        //        float dx = pbMain.Width - black.X;
+        //        float dy = pbMain.Height;
+
+        //        float length = MathF.Sqrt(dx * dx + dy * dy);
+
+        //        dx /= length;
+
+        //        black.X += dx + (float)0.00000000000001;
+
+        //        if (Math.Round(black.X + 60) == pbMain.Width)
+        //        {
+        //            objects.Remove(black);
+        //            foreach (var obj in objects.ToList())
+        //            {
+        //                if (black != null && (obj is Enemy || obj is Player) && black.original.ContainsKey(obj.GetHashCode()))
+        //                {
+        //                    obj.mainColor = black.freeDark(obj);
+        //                }
+        //            }
+
+        //            black = null;
+                    
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        black = new Black(0, 0, 0, pbMain.Height, id++);
+        //        objects.Add(black);
+                
+        //    }
+        //    //try {
+        //    if (black != null) { black.underBlack += (obj) => { }; }
+
+        //    //} catch { }
+
+
+
+        //    pbMain.Invalidate();
+        //}
+
         private void BlackTimer_Tick(object sender, EventArgs e)
         {
+            
             if (black != null)
             {
                 float dx = pbMain.Width - black.X;
@@ -164,23 +243,75 @@ namespace p_tech_lab_6
                 if (Math.Round(black.X + 60) == pbMain.Width)
                 {
                     objects.Remove(black);
+                    foreach (var obj in objects.ToList())
+                    {
+                        if (black != null && (obj is Enemy || obj is Player) && black.original.ContainsKey(obj.GetHashCode()))
+                        {
+                            obj.mainColor = black.freeDark(obj);
+                        }
+                    }
+
                     black = null;
                     BlackTimer.Interval = 5000;
-
                 }
 
             }
             else
             {
-                black = new Black(0, 0, 0, pbMain.Height);
-                objects.Add(black);
+                black = new Black(0, 0, 0, pbMain.Height, id++);
+                objects.Insert(0, black);
                 BlackTimer.Interval = 1;
             }
+            //try {
+            if (black != null) { black.underBlack += (obj) => { }; }
 
+            //} catch { }
 
 
 
             pbMain.Invalidate();
         }
+
+
+        public void updatePlayer()
+        {
+
+            if (marker != null)
+            {
+                float dx = marker.X - player.X;
+                float dy = marker.Y - player.Y;
+                float length = MathF.Sqrt(dx * dx + dy * dy);
+                dx /= length;
+                dy /= length;
+
+                // по сути мы теперь используем вектор dx, dy
+                // как вектор ускорения, точнее даже вектор притяжения
+                // который притягивает игрока к маркеру
+                // 0.5 просто коэффициент который подобрал на глаз
+                // и который дает естественное ощущение движения
+                player.vX += dx * 0.5f;
+                player.vY += dy * 0.5f;
+
+                // расчитываем угол поворота игрока 
+                player.Angle = 90 - MathF.Atan2(player.vX, player.vY) * 180 / MathF.PI;
+            }
+
+            // тормозящий момент,
+            // нужен чтобы, когда игрок достигнет маркера произошло постепенное замедление
+            player.vX += -player.vX * 0.1f;
+            player.vY += -player.vY * 0.1f;
+
+            // пересчет позиция игрока с помощью вектора скорости
+            player.X += player.vX;
+            player.Y += player.vY;
+        }
+        //public void Reload()
+        //{
+        //    foreach (var obj in objects)
+        //    {
+        //        g.Transform = obj.GetTransform();
+        //        obj.Render(g);
+        //    }
+        //}
     }
 }

@@ -9,17 +9,17 @@ namespace p_tech_lab_6.Objects
 {
     internal class Marker: BaseObject
     {
-        public Marker(float x , float y , float angle ) : base(x, y, angle)
+        public Marker(float x , float y , float angle) : base(x, y, angle)
         {
-
+            this.mainColor = Color.Red;
         } 
 
         public override void Render(Graphics g)
         {
 
-            g.FillEllipse(new SolidBrush(Color.Red), -3, -3, 6, 6);
-            g.FillEllipse(new SolidBrush(Color.Red), -6, -6, 12, 12);
-            g.FillEllipse(new SolidBrush(Color.Red), -10, -10, 20, 20);
+            g.FillEllipse(new SolidBrush(mainColor), -3, -3, 6, 6);
+            g.FillEllipse(new SolidBrush(mainColor), -6, -6, 12, 12);
+            g.FillEllipse(new SolidBrush(mainColor), -10, -10, 20, 20);
         }
 
         public override GraphicsPath GetGraphicsPath()
