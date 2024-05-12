@@ -13,7 +13,7 @@ namespace p_tech_lab_6.Objects
         public float Y;
         public float Angle;
         public Color mainColor;
-        public int id;
+
 
         public Action <BaseObject, BaseObject> OnOverlap;
 

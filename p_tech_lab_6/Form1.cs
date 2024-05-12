@@ -18,16 +18,16 @@ namespace p_tech_lab_6
 
         int countEnemy = 0;
         int score = 0;
-        int id = 0;
+
 
 
         public Form1()
         {
             InitializeComponent();
 
-            player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0, id++);
+            player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
 
-            black = new Black(0, 0, 0, pbMain.Height, id++);
+            black = new Black(0, 0, 0, pbMain.Height);
             objects.Add(black);
             bool cop = true;
             
@@ -65,7 +65,7 @@ namespace p_tech_lab_6
             };
 
             objects.Add(player);
-            objects.Add(new Enemy(100, 100, 0, id++));
+            objects.Add(new Enemy(100, 100, 0));
 
             marker = new Marker(pbMain.Width / 2 + 50, pbMain.Height / 2 + 50, 0);
 
@@ -175,7 +175,7 @@ namespace p_tech_lab_6
                 }
             }
 
-            var enemy = new Enemy(x, y, 0, id++);
+            var enemy = new Enemy(x, y, 0);
             objects.Add(enemy);
             countEnemy++;
         }
@@ -252,13 +252,12 @@ namespace p_tech_lab_6
                     }
 
                     black = null;
-                    BlackTimer.Interval = 5000;
                 }
 
             }
             else
             {
-                black = new Black(0, 0, 0, pbMain.Height, id++);
+                black = new Black(0, 0, 0, pbMain.Height);
                 objects.Insert(0, black);
                 BlackTimer.Interval = 1;
             }

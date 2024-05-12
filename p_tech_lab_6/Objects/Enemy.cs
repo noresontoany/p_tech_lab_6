@@ -9,10 +9,10 @@ namespace p_tech_lab_6.Objects
 {
     internal class Enemy : BaseObject
     {
-        public Enemy(float x, float y, float angle, int id) : base(x, y, angle)
+        public Enemy(float x, float y, float angle) : base(x, y, angle)
         {
             this.mainColor = Color.Green;
-            this .id = id;
+        
         }
 
         public override void Render(Graphics g)

@@ -23,7 +23,7 @@ namespace p_tech_lab_6.Objects
 
      
 
-        public Black(float x, float y, float angle, float blackHeight, int id) : base(x, y, angle)
+        public Black(float x, float y, float angle, float blackHeight) : base(x, y, angle)
         {
             this.blackHeight = blackHeight;
             original = new();
