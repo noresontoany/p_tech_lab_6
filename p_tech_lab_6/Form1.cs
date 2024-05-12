@@ -10,7 +10,7 @@ namespace p_tech_lab_6
 
         List<BaseObject> objects = new();
         Player player;
-
+        Black black;
         Marker? marker;
 
         int countEnemy = 0;
@@ -21,12 +21,16 @@ namespace p_tech_lab_6
         {
             InitializeComponent();
             player = new Player(pbMain.Width / 2, pbMain.Height / 2, 0);
+            black = new Black(0, 0, 0, pbMain.Height);
+            objects.Add(black);
 
             player.OnOverlap += (player, obj) =>
             {
-                txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj }\n" + txtLog.Text;
 
             };
+
+           
 
             player.OnMarkerOverlap += (m) =>
             {
@@ -38,7 +42,7 @@ namespace p_tech_lab_6
             {
                 objects.Remove(e);
                 countEnemy--;
-               
+
                 scoreTxt.Text = "Очки :" + score.ToString();
                 createEnemy();
 
@@ -70,8 +74,6 @@ namespace p_tech_lab_6
                     player.Overlap(obj);
                     obj.Overlap(player);
                 }
-
-
 
 
 
@@ -144,6 +146,41 @@ namespace p_tech_lab_6
             var enemy = new Enemy(x, y, 0);
             objects.Add(enemy);
             countEnemy++;
+        }
+
+        private void BlackTimer_Tick(object sender, EventArgs e)
+        {
+            if (black != null)
+            {
+                float dx = pbMain.Width - black.X;
+                float dy = pbMain.Height;
+
+                float length = MathF.Sqrt(dx * dx + dy * dy);
+
+                dx /= length;
+
+                black.X += dx + 1;
+
+                if (Math.Round(black.X + 60) == pbMain.Width)
+                {
+                    objects.Remove(black);
+                    black = null;
+                    BlackTimer.Interval = 5000;
+
+                }
+
+            }
+            else
+            {
+                black = new Black(0, 0, 0, pbMain.Height);
+                objects.Add(black);
+                BlackTimer.Interval = 1;
+            }
+
+
+
+
+            pbMain.Invalidate();
         }
     }
 }

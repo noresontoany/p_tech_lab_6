@@ -48,6 +48,8 @@ namespace p_tech_lab_6.Objects
             {
                 OnEnemyOverlap(obj as Enemy);
             }
+
+
            
         }
     }

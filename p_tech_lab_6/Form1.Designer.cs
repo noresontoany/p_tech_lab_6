@@ -34,6 +34,7 @@
             txtLog = new RichTextBox();
             newObjTimer = new System.Windows.Forms.Timer(components);
             scoreTxt = new Label();
+            BlackTimer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pbMain).BeginInit();
             SuspendLayout();
             // 
@@ -42,7 +43,7 @@
             pbMain.Location = new Point(23, 14);
             pbMain.Margin = new Padding(2);
             pbMain.Name = "pbMain";
-            pbMain.Size = new Size(600, 429);
+            pbMain.Size = new Size(582, 429);
             pbMain.TabIndex = 0;
             pbMain.TabStop = false;
             pbMain.Paint += pbMain_Paint;
@@ -56,7 +57,7 @@
             // 
             // txtLog
             // 
-            txtLog.Location = new Point(635, 15);
+            txtLog.Location = new Point(634, 14);
             txtLog.Margin = new Padding(2);
             txtLog.Name = "txtLog";
             txtLog.Size = new Size(251, 429);
@@ -78,11 +79,17 @@
             scoreTxt.TabIndex = 2;
             scoreTxt.Text = "Очки: 0";
             // 
+            // BlackTimer
+            // 
+            BlackTimer.Enabled = true;
+            BlackTimer.Interval = 1;
+            BlackTimer.Tick += BlackTimer_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(893, 461);
+            ClientSize = new Size(899, 453);
             Controls.Add(scoreTxt);
             Controls.Add(txtLog);
             Controls.Add(pbMain);
@@ -101,5 +108,6 @@
         private RichTextBox txtLog;
         private System.Windows.Forms.Timer newObjTimer;
         private Label scoreTxt;
+        private System.Windows.Forms.Timer BlackTimer;
     }
 }
