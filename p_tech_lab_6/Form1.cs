@@ -96,7 +96,7 @@ namespace p_tech_lab_6
 
 
 
-                    if (black != null && (obj is Enemy || obj is Player) && black.Overlaps(obj, g))
+                    if (black != null && (obj is Enemy || obj is Player || obj is Marker) && black.Overlaps(obj, g))
                     {
                         black.Overlap(obj);
                         obj.Overlap(black);
@@ -111,7 +111,7 @@ namespace p_tech_lab_6
 
 
                     }
-                    else if (black != null && (obj is Enemy || obj is Player) && black.original.ContainsKey(obj.GetHashCode()))
+                    else if (black != null && (obj is Enemy || obj is Player || obj is Marker) && black.original.ContainsKey(obj.GetHashCode()))
                     {
 
                         obj.mainColor = black.freeDark(obj);
@@ -245,13 +245,14 @@ namespace p_tech_lab_6
                     objects.Remove(black);
                     foreach (var obj in objects.ToList())
                     {
-                        if (black != null && (obj is Enemy || obj is Player) && black.original.ContainsKey(obj.GetHashCode()))
+                        if (black != null && (obj is Enemy || obj is Player || obj is Marker) && black.original.ContainsKey(obj.GetHashCode()))
                         {
                             obj.mainColor = black.freeDark(obj);
                         }
                     }
 
                     black = null;
+                    BlackTimer.Interval = 5000;
                 }
 
             }

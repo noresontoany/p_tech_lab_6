@@ -16,7 +16,7 @@ namespace p_tech_lab_6.Objects
         public float vX, vY;
         public  Player(float x , float y,  float angle) : base (x,y,angle)
         {
-         
+            this.mainColor = Color.DeepSkyBlue;
         }
 
         public override void Render(Graphics g)

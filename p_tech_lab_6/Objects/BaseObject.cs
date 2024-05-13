@@ -63,10 +63,12 @@ namespace p_tech_lab_6.Objects
             // берем информацию о форме
             var path1 = this.GetGraphicsPath();
             var path2 = obj.GetGraphicsPath();
-
+            var p = path1;
             // применяем к объектам матрицы трансформации
             path1.Transform(this.GetTransform());
             path2.Transform(obj.GetTransform());
+
+            //MessageBox.Show(p..ToString() + "===" + path1.ToString());
 
             // используем класс Region, который позволяет определить 
             // пересечение объектов в данном графическом контексте

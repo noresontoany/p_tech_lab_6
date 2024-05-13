@@ -40,10 +40,9 @@
             // 
             // pbMain
             // 
-            pbMain.Location = new Point(23, 14);
-            pbMain.Margin = new Padding(2);
+            pbMain.Location = new Point(33, 23);
             pbMain.Name = "pbMain";
-            pbMain.Size = new Size(582, 429);
+            pbMain.Size = new Size(831, 715);
             pbMain.TabIndex = 0;
             pbMain.TabStop = false;
             pbMain.Paint += pbMain_Paint;
@@ -52,15 +51,14 @@
             // timer1
             // 
             timer1.Enabled = true;
-            timer1.Interval = 30;
+            timer1.Interval = 1;
             timer1.Tick += timer1_Tick;
             // 
             // txtLog
             // 
-            txtLog.Location = new Point(634, 14);
-            txtLog.Margin = new Padding(2);
+            txtLog.Location = new Point(906, 23);
             txtLog.Name = "txtLog";
-            txtLog.Size = new Size(251, 429);
+            txtLog.Size = new Size(357, 712);
             txtLog.TabIndex = 1;
             txtLog.Text = "";
             // 
@@ -73,9 +71,10 @@
             // scoreTxt
             // 
             scoreTxt.AutoSize = true;
-            scoreTxt.Location = new Point(545, 28);
+            scoreTxt.Location = new Point(779, 47);
+            scoreTxt.Margin = new Padding(4, 0, 4, 0);
             scoreTxt.Name = "scoreTxt";
-            scoreTxt.Size = new Size(48, 15);
+            scoreTxt.Size = new Size(74, 25);
             scoreTxt.TabIndex = 2;
             scoreTxt.Text = "Очки: 0";
             // 
@@ -87,13 +86,12 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(899, 453);
+            ClientSize = new Size(1284, 755);
             Controls.Add(scoreTxt);
             Controls.Add(txtLog);
             Controls.Add(pbMain);
-            Margin = new Padding(2);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pbMain).EndInit();
