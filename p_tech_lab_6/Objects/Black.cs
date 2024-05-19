@@ -17,7 +17,6 @@ namespace p_tech_lab_6.Objects
 
         public Action<BaseObject> underBlack;
 
-        public Action<Black> OnDarkAreaTimeOut;
 
         public Dictionary<int , Color> original;
 

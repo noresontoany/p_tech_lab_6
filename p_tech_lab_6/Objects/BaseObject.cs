@@ -33,11 +33,6 @@ namespace p_tech_lab_6.Objects
             }
         }
 
-        public virtual void reColor(BaseObject obj)
-        {
-
-        }
-
         // добавил виртуальный метод для отрисовки
         public virtual void Render(Graphics g)
         {

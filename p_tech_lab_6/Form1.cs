@@ -7,7 +7,7 @@ namespace p_tech_lab_6
 {
     public partial class Form1 : Form
     {
-        MyRectangle? myRect; // создадим поле под наш прямоугольник
+        
 
         List<BaseObject> objects = new();
         Player? player;
@@ -29,20 +29,13 @@ namespace p_tech_lab_6
 
             black = new Black(0, 0, 0, pbMain.Height);
             objects.Add(black);
-            bool cop = true;
+            
             
                 player.OnOverlap += (player, obj) =>
                 {
-                    if (obj is Black)
-                    {
-                        cop = false;
-                    }
-                    else { cop = true; }
 
-                    if (cop)
-                    {
-                        txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
-                    }
+                   txtLog.Text = $"[{DateTime.Now:HH:mm:ss:ff}] Игрок пересекся с {obj}\n" + txtLog.Text;
+                    
                 };
             
 
